@@ -6,9 +6,8 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  ci:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -26,3 +25,10 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello_api:$GITHUB_SHA .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello_api:$GITHUB_SHA
+  
+  cd:
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Atualizando a tag da imagem no deployment
+        run: |
+          sed -i "s|matheusrivello/hello_api:[a-f0-9]\{40\}|matheusrivello/hello_api:$GITHUB_SHA|g" k8s/deployment.yaml
