@@ -28,7 +28,10 @@ jobs:
   
   cd:
     runs-on: ubuntu-latest
-    steps:      
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+            
       - name: Atualizando a tag da imagem no deployment
         run: |
           sed -i "s|matheusrivello/hello_api:[a-f0-9]\{40\}|matheusrivello/hello_api:$GITHUB_SHA|g" k8s/deployment.yaml
