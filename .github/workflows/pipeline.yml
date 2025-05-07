@@ -35,4 +35,6 @@ jobs:
             
       - name: Atualizando a tag da imagem no deployment
         run: |
+          cat k8s/deployment.yaml | grep "matheusrivello/hello_api"
           sed -i "s|matheusrivello/hello_api:[a-f0-9]\{40\}|matheusrivello/hello_api:$GITHUB_SHA|g" k8s/deployment.yaml
+          cat k8s/deployment.yaml | grep "matheusrivello/hello_api"
